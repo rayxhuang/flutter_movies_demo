@@ -1,5 +1,4 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_app_demo/application/network_bloc.dart';
 import 'package:flutter_app_demo/domain/core/network_info.dart';
 import 'package:flutter_test/flutter_test.dart';
