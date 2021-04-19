@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_demo/application/network_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'presentation_const.dart';
 
@@ -6,7 +8,9 @@ class MyAppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
+        home: BlocProvider(
+          create: (BuildContext context) => NetworkBloc()..add(GetConnectivity()),
+          child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.indigo[600],
               leading: const Icon(
@@ -54,7 +58,20 @@ class MyAppWidget extends StatelessWidget {
                 )
               ],
             ),
-            body: Container()
+            body: BlocBuilder<NetworkBloc, NetworkState>(
+              builder: (BuildContext context, state) {
+                if (state is Connected) {
+                  return Container();
+                } else {
+                  return Container(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  );
+                }
+              },
+            )
+          ),
         )
     );
   }
