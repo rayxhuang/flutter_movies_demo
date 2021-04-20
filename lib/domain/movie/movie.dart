@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'imbd_id.dart';
 
-
+//TODO Should have unique id?
 class Movie extends Equatable{
   final ImbdID id;
   final String title;

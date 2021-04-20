@@ -4,6 +4,7 @@ import 'package:flutter_app_demo/application/core/network/network_bloc.dart';
 import 'package:flutter_app_demo/domain/core/network_info.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'movie/movie_page.dart';
 import 'presentation_const.dart';
 
 class MyAppWidget extends StatelessWidget {
@@ -11,7 +12,7 @@ class MyAppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: BlocProvider(
-          create: (BuildContext context) => NetworkBloc(
+          create: (context) => NetworkBloc(
             networkInfo: NetworkInfoImpl(
               connectionChecker: DataConnectionChecker()
             )
@@ -67,7 +68,7 @@ class MyAppWidget extends StatelessWidget {
             body: BlocBuilder<NetworkBloc, NetworkState>(
               builder: (BuildContext context, state) {
                 if (state is Connected) {
-                  return Container();
+                  return MoviePage();
                 } else {
                   return Container(
                     child: Center(

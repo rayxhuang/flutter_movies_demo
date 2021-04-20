@@ -1,10 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_demo/domain/core/failure.dart';
 import 'package:flutter_app_demo/domain/core/validator.dart';
 
+//This is a value object
+@immutable
 class ImbdID extends Equatable {
-  Either<IDFailure, String> id;
+  final Either<IDFailure, String> id;
 
   ImbdID._(this.id);
 

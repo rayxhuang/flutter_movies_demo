@@ -16,14 +16,14 @@ void main(){
 
   test(
     'Should forward the call to DataConnectionChecker',
-      () async {
-        final tHasConnection = Future.value(true);
-        when(_connectionChecker.hasConnection).thenAnswer((_) => tHasConnection);
+    () async {
+      final tHasConnection = Future.value(true);
+      when(_connectionChecker.hasConnection).thenAnswer((_) => tHasConnection);
 
-        final result = _networkInfo.isConnected;
+      final result = _networkInfo.isConnected;
 
-        verify(_connectionChecker.hasConnection);
-        expect(result, tHasConnection);
-      }
+      verify(_connectionChecker.hasConnection);
+      expect(result, tHasConnection);
+    }
   );
 }
