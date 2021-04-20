@@ -3,17 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_app_demo/domain/core/failure.dart';
 import 'package:flutter_app_demo/domain/core/validator.dart';
 
-// class ImbdID extends Equatable {
-//   final String id;
-//
-//   ImbdID({this.id = "zz0000000"});
-//
-//   String get imbdID => this.id;
-//
-//   @override
-//   List<Object> get props => [this.id];
-// }
-
 class ImbdID extends Equatable {
   Either<IDFailure, String> id;
 

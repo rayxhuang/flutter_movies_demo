@@ -1,5 +1,7 @@
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_demo/application/network_bloc.dart';
+import 'package:flutter_app_demo/application/core/network/network_bloc.dart';
+import 'package:flutter_app_demo/domain/core/network_info.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'presentation_const.dart';
@@ -9,7 +11,11 @@ class MyAppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: BlocProvider(
-          create: (BuildContext context) => NetworkBloc()..add(GetConnectivity()),
+          create: (BuildContext context) => NetworkBloc(
+            networkInfo: NetworkInfoImpl(
+              connectionChecker: DataConnectionChecker()
+            )
+          )..add(GetConnectivity()),
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.indigo[600],

@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_app_demo/domain/core/network_info.dart';
 import 'package:meta/meta.dart';
 
@@ -19,7 +17,7 @@ class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
     NetworkEvent event,
   ) async* {
     if (event is GetConnectivity) {
-      bool connected = await networkInfo.isConnected;
+      bool connected = await isConnected();
 
       if (connected) {
         yield Connected();
@@ -27,5 +25,9 @@ class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
         yield Disconnected();
       }
     }
+  }
+
+  Future<bool> isConnected() async {
+    return networkInfo.isConnected;
   }
 }

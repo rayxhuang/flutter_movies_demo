@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_app_demo/application/network_bloc.dart';
+import 'package:flutter_app_demo/application/core/network/network_bloc.dart';
 import 'package:flutter_app_demo/domain/core/network_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
