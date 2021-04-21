@@ -18,6 +18,7 @@ class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
     NetworkEvent event,
   ) async* {
     if (event is NetworkGetConnectivityEvent) {
+      print('Checking connectivity');
       bool connected = await isConnectedToInternet();
 
       if (connected) {
@@ -25,6 +26,13 @@ class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
       } else{
         yield NetworkDisconnectedState();
       }
+
+      Future.delayed(
+        const Duration(seconds: 30),
+        () => this.add(NetworkGetConnectivityEvent()),
+      );
+    } else {
+      throw Exception("Unexpected error occurred! This is not possible");
     }
   }
 

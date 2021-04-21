@@ -33,6 +33,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
           print(_moviesList);
           yield MovieLoadedSuccessfulState(_moviesList);
         } catch (e) {
+          print('Yea I did this');
           print(e);
           yield MovieErrorState();
         }
