@@ -11,3 +11,5 @@ class NetworkInitialState extends NetworkState {}
 class NetworkConnectedState extends NetworkState {}
 
 class NetworkDisconnectedState extends NetworkState {}
+
+class NetworkLostConnectionState extends NetworkState {}

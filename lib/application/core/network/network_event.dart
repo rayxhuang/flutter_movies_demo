@@ -4,3 +4,5 @@ part of 'network_bloc.dart';
 abstract class NetworkEvent {}
 
 class NetworkGetConnectivityEvent extends NetworkEvent {}
+
+class NetworkGetConnectivityRecursiveEvent extends NetworkEvent {}

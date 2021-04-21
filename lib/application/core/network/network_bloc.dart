@@ -17,20 +17,31 @@ class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
   Stream<NetworkState> mapEventToState(
     NetworkEvent event,
   ) async* {
-    if (event is NetworkGetConnectivityEvent) {
-      print('Checking connectivity');
+    if (event is NetworkGetConnectivityRecursiveEvent) {
+      print('Checking connectivity recursively');
       bool connected = await isConnectedToInternet();
 
       if (connected) {
         yield NetworkConnectedState();
       } else{
-        yield NetworkDisconnectedState();
+        yield NetworkLostConnectionState();
       }
 
-      Future.delayed(
-        const Duration(seconds: 30),
-        () => this.add(NetworkGetConnectivityEvent()),
-      );
+      checkConnectionRecursively();
+    } else if (event is NetworkGetConnectivityEvent) {
+      print('Checking initial connectivity');
+      bool connected = await isConnectedToInternet();
+
+      if (connected) {
+        yield NetworkConnectedState();
+        checkConnectionRecursively();
+      } else{
+        yield NetworkDisconnectedState();
+        Future.delayed(
+          const Duration(seconds: 30),
+          () => this.add(NetworkGetConnectivityEvent()),
+        );
+      }
     } else {
       throw Exception("Unexpected error occurred! This is not possible");
     }
@@ -38,5 +49,12 @@ class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
 
   Future<bool> isConnectedToInternet() async {
     return networkInfo.isConnected;
+  }
+
+  void checkConnectionRecursively() {
+    Future.delayed(
+      const Duration(seconds: 30),
+      () => this.add(NetworkGetConnectivityRecursiveEvent()),
+    );
   }
 }

@@ -34,7 +34,7 @@ class _MoviePageState extends State<MoviePage> with SingleTickerProviderStateMix
     return BlocListener<NetworkBloc, NetworkState>(
       listenWhen: (previous, current) => previous != current,
       listener: (BuildContext context, state) {
-        if (state is NetworkDisconnectedState) {
+        if (state is NetworkLostConnectionState) {
           ScaffoldMessenger.of(context).showSnackBar(kLostConnectionSnackBar);
         } else if (state is NetworkConnectedState) {
           ScaffoldMessenger.of(context).showSnackBar(kRegainedConnectionSnackBar);
@@ -76,37 +76,6 @@ class _MoviePageState extends State<MoviePage> with SingleTickerProviderStateMix
           },
         )
       ),
-    );
-    return BlocProvider(
-      create: (context) => MovieBloc(
-        movieRepo: MovieRepoImpl(),
-        networkBloc: BlocProvider.of<NetworkBloc>(context),
-      )..add(MovieGetMoviesEvent()),
-      child: BlocBuilder<MovieBloc, MovieState>(
-        builder: (BuildContext context, state) {
-          if (state is MovieLoadedSuccessfulState) {
-            _movieAnimationController.forward();
-            return Container(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
-                  childAspectRatio: 0.618,
-                ),
-                itemCount: state.movies.length,
-                itemBuilder: (context, index) {
-                  return MovieDisplayWidget(
-                    movie: state.movies[index],
-                    animationController: _movieAnimationController,
-                    offsetMultiplier: index ~/ 2,
-                  );
-                }
-              ),
-            );
-          } else {
-            return MovieLoadingWidget();
-          }
-        },
-      )
     );
   }
 }
