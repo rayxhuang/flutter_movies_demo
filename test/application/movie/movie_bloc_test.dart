@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_app_demo/application/movie/movie_bloc.dart';
 import 'package:flutter_app_demo/domain/core/network_info.dart';

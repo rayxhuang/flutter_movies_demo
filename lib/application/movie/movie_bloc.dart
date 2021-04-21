@@ -30,6 +30,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       if (hasInternetConnection) {
         yield MovieLoadingState();
         try {
+          print('Searching: ${event.searchString}');
           _moviesList = await movieRepo.getMovieListOnline(event.searchString);
           print(_moviesList);
           yield MovieLoadedSuccessfulState(_moviesList);
