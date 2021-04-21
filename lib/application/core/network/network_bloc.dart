@@ -17,21 +17,15 @@ class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
   Stream<NetworkState> mapEventToState(
     NetworkEvent event,
   ) async* {
+    bool connected = await isConnectedToInternet();
     if (event is NetworkGetConnectivityRecursiveEvent) {
-      print('Checking connectivity recursively');
-      bool connected = await isConnectedToInternet();
-
       if (connected) {
         yield NetworkConnectedState();
       } else{
         yield NetworkLostConnectionState();
       }
-
       checkConnectionRecursively();
     } else if (event is NetworkGetConnectivityEvent) {
-      print('Checking initial connectivity');
-      bool connected = await isConnectedToInternet();
-
       if (connected) {
         yield NetworkConnectedState();
         checkConnectionRecursively();

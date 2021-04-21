@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_demo/application/core/network/network_bloc.dart';
+import 'package:flutter_app_demo/application/movie/movie_bloc.dart';
+import 'package:flutter_app_demo/presentation/components/blank_page_with_message.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../presentation_const.dart';
-import 'movie_view.dart';
+import 'movie_view_page.dart';
 
 class MovieHomePage extends StatelessWidget {
   @override
@@ -41,8 +43,7 @@ class MovieHomePage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            //TODO
-            onPressed: (){ BlocProvider.of<NetworkBloc>(context).add(NetworkGetConnectivityEvent()); },
+            onPressed: (){ BlocProvider.of<MovieBloc>(context).add(MovieGetMoviesEvent()); },
             icon: const Icon(
               Icons.refresh,
               color: kAppBarSubTitleColor,
@@ -62,19 +63,9 @@ class MovieHomePage extends StatelessWidget {
           if (state is NetworkConnectedState || state is NetworkLostConnectionState) {
             return MoviePage();
           } else {
-            return Container(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const CircularProgressIndicator(),
-                    const SizedBox(height: 10,),
-                    const Text('No Internet Connection'),
-                    const Text('Retrying in 30 seconds'),
-                  ],
-                ),
-              ),
+            return BlankPageMessageWidget(
+              message: 'No Internet Connection',
+              subMessage: 'Retrying in 30 seconds',
             );
           }
         },
