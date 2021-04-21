@@ -7,11 +7,7 @@ import 'package:mockito/mockito.dart';
 class MockNetworkInfoImpl extends Mock implements NetworkInfoImpl {}
 
 void main(){
-  MockNetworkInfoImpl _networkInfo;
-
-  setUp(() {
-    _networkInfo = MockNetworkInfoImpl();
-  });
+  MockNetworkInfoImpl _networkInfo = MockNetworkInfoImpl();
 
   blocTest(
     'Should emit Connected state when phone has connection',
@@ -20,8 +16,8 @@ void main(){
       when(_networkInfo.isConnected).thenAnswer((_) async => tHasConnection);
       return NetworkBloc(networkInfo: _networkInfo);
     },
-    act: (bloc) => bloc.add(GetConnectivity()),
-    expect: () => [isA<Connected>()],
+    act: (bloc) => bloc.add(NetworkGetConnectivityEvent()),
+    expect: () => [NetworkConnectedState()],
   );
 
   blocTest(
@@ -31,7 +27,7 @@ void main(){
       when(_networkInfo.isConnected).thenAnswer((_) async => tHasConnection);
       return NetworkBloc(networkInfo: _networkInfo);
     },
-    act: (bloc) => bloc.add(GetConnectivity()),
-    expect: () => [isA<Disconnected>()],
+    act: (bloc) => bloc.add(NetworkGetConnectivityEvent()),
+    expect: () => [NetworkDisconnectedState()],
   );
 }

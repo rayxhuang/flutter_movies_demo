@@ -1,14 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'imbd_id.dart';
+import 'imdb_id.dart';
 
-//TODO Should have unique id?
-class Movie extends Equatable{
-  final ImbdID id;
+class MovieEntity extends Equatable{
+  final ImdbID id;
   final String title;
   final String imageURL;
 
-  Movie({
+  MovieEntity({
     @required this.id,
     @required this.title,
     @required this.imageURL,
@@ -16,4 +15,7 @@ class Movie extends Equatable{
 
   @override
   List<Object> get props => [this.id, this.title, this.imageURL];
+
+  @override
+  String toString() => [id, title].toString();
 }

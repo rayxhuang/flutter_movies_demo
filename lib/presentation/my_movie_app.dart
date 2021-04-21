@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'movie/movie_page.dart';
 import 'presentation_const.dart';
 
-class MyAppWidget extends StatelessWidget {
+class MyMovieApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +16,7 @@ class MyAppWidget extends StatelessWidget {
             networkInfo: NetworkInfoImpl(
               connectionChecker: DataConnectionChecker()
             )
-          )..add(GetConnectivity()),
+          )..add(NetworkGetConnectivityEvent()),
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.indigo[600],
@@ -67,7 +67,7 @@ class MyAppWidget extends StatelessWidget {
             ),
             body: BlocBuilder<NetworkBloc, NetworkState>(
               builder: (BuildContext context, state) {
-                if (state is Connected) {
+                if (state is NetworkConnectedState) {
                   return MoviePage();
                 } else {
                   return Container(

@@ -1,5 +1,5 @@
 import 'movie.dart';
 
 abstract class IMovieRepo {
-  Future<List<Movie>> getMovies(String search);
+  Future<List<MovieEntity>> getMovieListOnline(String searchString);
 }

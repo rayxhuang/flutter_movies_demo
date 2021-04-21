@@ -1,0 +1,1 @@
+String searchStringConverter (String rawString) => rawString.replaceAll(' ', '+');

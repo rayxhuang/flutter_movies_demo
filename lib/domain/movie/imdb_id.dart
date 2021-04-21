@@ -6,13 +6,13 @@ import 'package:flutter_app_demo/domain/core/validator.dart';
 
 //This is a value object
 @immutable
-class ImbdID extends Equatable {
+class ImdbID extends Equatable {
   final Either<IDFailure, String> id;
 
-  ImbdID._(this.id);
+  ImdbID._(this.id);
 
-  factory ImbdID({id}){
-    return ImbdID._(
+  factory ImdbID({id}){
+    return ImdbID._(
       validateImbdID(id ?? "zz0000000")
     );
   }
@@ -21,4 +21,9 @@ class ImbdID extends Equatable {
 
   @override
   List<Object> get props => [this.id];
+
+  @override
+  String toString() {
+    return id.fold((l) => l.message, (r) => r);
+  }
 }

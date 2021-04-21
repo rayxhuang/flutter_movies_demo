@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_app_demo/domain/core/network_info.dart';
 import 'package:meta/meta.dart';
 
@@ -10,24 +11,24 @@ part 'network_state.dart';
 class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
   final NetworkInfoImpl networkInfo;
 
-  NetworkBloc({@required this.networkInfo}) : super(NetworkInitial());
+  NetworkBloc({@required this.networkInfo}) : super(NetworkInitialState());
 
   @override
   Stream<NetworkState> mapEventToState(
     NetworkEvent event,
   ) async* {
-    if (event is GetConnectivity) {
-      bool connected = await isConnected();
+    if (event is NetworkGetConnectivityEvent) {
+      bool connected = await isConnectedToInternet();
 
       if (connected) {
-        yield Connected();
+        yield NetworkConnectedState();
       } else{
-        yield Disconnected();
+        yield NetworkDisconnectedState();
       }
     }
   }
 
-  Future<bool> isConnected() async {
+  Future<bool> isConnectedToInternet() async {
     return networkInfo.isConnected;
   }
 }

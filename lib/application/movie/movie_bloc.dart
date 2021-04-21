@@ -13,31 +13,31 @@ part 'movie_state.dart';
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   final NetworkBloc networkBloc;
   final MovieRepoImpl movieRepo;
-  List<Movie> _movies;
+  List<MovieEntity> _moviesList;
 
   MovieBloc({
     @required this.networkBloc,
     @required this.movieRepo,
-  }) : super(MovieInitial());
+  }) : super(MovieInitialState());
 
   @override
   Stream<MovieState> mapEventToState(
     MovieEvent event,
   ) async* {
-    if (event is GetMovies) {
-      bool hasInternetConnection = await networkBloc.isConnected();
+    if (event is MovieGetMoviesEvent) {
+      bool hasInternetConnection = await networkBloc.isConnectedToInternet();
       if (hasInternetConnection) {
-        yield MovieLoading();
+        yield MovieLoadingState();
         try {
-          _movies = await movieRepo.getMovies(event.search);
-          print(_movies);
-          yield MovieLoaded();
+          _moviesList = await movieRepo.getMovieListOnline(event.searchString);
+          print(_moviesList);
+          yield MovieLoadedSuccessfulState(_moviesList);
         } catch (e) {
           print(e);
-          yield MovieError();
+          yield MovieErrorState();
         }
       } else {
-        yield MovieError();
+        yield MovieErrorState();
       }
     }
   }
