@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_demo/application/movie/movie_bloc.dart';
 import 'package:flutter_app_demo/application/core/network/network_bloc.dart';
-import 'package:flutter_app_demo/domain/movie/movie.dart';
 import 'package:flutter_app_demo/presentation/components/blank_page_with_message.dart';
+import 'package:flutter_app_demo/presentation/movie/movie_detail_page.dart';
 import 'package:flutter_app_demo/presentation/presentation_const.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,7 +48,9 @@ class _MoviePageState extends State<MoviePage> with SingleTickerProviderStateMix
       child: BlocBuilder<MovieBloc, MovieState>(
         builder: (BuildContext context, state) {
           if (state is MovieLoadedSuccessfulState) {
-            _movieAnimationController.forward();
+            if (!_movieAnimationController.isAnimating) {
+              _movieAnimationController.forward(from: 0);
+            }
             return Container(
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -65,6 +67,8 @@ class _MoviePageState extends State<MoviePage> with SingleTickerProviderStateMix
                 }
               ),
             );
+          } else if (state is MovieShowDetailState) {
+            return MovieDetailPage(movie: state.movie);
           } else if (state is MovieLoadingState) {
             return BlankPageMessageWidget(message: 'Connected to internet, loading...',);
           } else if (state is MovieErrorState) {

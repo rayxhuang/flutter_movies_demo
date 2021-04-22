@@ -15,6 +15,16 @@ void main() {
   );
 
   test(
+    'Should return Right when valid input is passed in',
+        () {
+      final String input = "zz00000000";
+      final result = validateImbdID(input);
+
+      expect(result, Right("zz00000000"));
+    }
+  );
+
+  test(
     'Should return Left when invalid input is passed in',
     () {
       final String input = "asd";

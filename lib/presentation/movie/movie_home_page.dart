@@ -16,9 +16,17 @@ class MovieHomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.indigo[600],
-          leading: const Icon(
-            Icons.movie,
-            color: Colors.orange,
+          leading: BlocBuilder<MovieBloc, MovieState>(
+            builder: (context, state) {
+              if (state is MovieShowDetailState) {
+                return IconButton(
+                  icon: const Icon(Icons.arrow_back_ios,),
+                  onPressed: () { BlocProvider.of<MovieBloc>(context).add(MovieGoBackEvent()); },
+                );
+              } else {
+                return kMovieIconOrange;
+              }
+            }
           ),
           title: BlocBuilder<MovieSearchBloc, MovieSearchState>(
             builder: (context, state) {
@@ -107,8 +115,7 @@ class MovieHomePage extends StatelessWidget {
         ),
         body: BlocBuilder<NetworkBloc, NetworkState>(
           builder: (BuildContext context, state) {
-            if (state is NetworkConnectedState ||
-                state is NetworkLostConnectionState) {
+            if (state is NetworkConnectedState || state is NetworkLostConnectionState) {
               return MoviePage();
             } else {
               return BlankPageMessageWidget(

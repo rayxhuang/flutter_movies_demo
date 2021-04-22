@@ -1,7 +1,10 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_demo/application/movie/movie_bloc.dart';
 import 'package:flutter_app_demo/domain/movie/movie.dart';
+import 'package:flutter_app_demo/presentation/movie/widgets/movie_poster_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MovieDisplayWidget extends StatelessWidget {
   final MovieEntity movie;
@@ -26,53 +29,54 @@ class MovieDisplayWidget extends StatelessWidget {
         )
     );
 
-    return FadeTransition(
-      opacity: _animationOpacity,
-      child: SlideTransition(
-        position: _animationOffset,
-        child: Container(
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              getPosterImage(),
-              Positioned(
-                left: 12,
-                right: 12,
-                bottom: 20,
-                child: Text(
-                  '${this.movie.title}',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+    return GestureDetector(
+      onTap: () {
+        BlocProvider.of<MovieBloc>(context).add(MovieShowDetailEvent(movie: movie));
+      },
+      child: FadeTransition(
+        opacity: _animationOpacity,
+        child: SlideTransition(
+          position: _animationOffset,
+          child: Container(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                MoviePosterWidget(this.movie),
+                Positioned(
+                  left: 12,
+                  right: 12,
+                  bottom: 35,
+                  child: Text(
+                    '${this.movie.title}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Positioned(
+                  left: 12,
+                  right: 12,
+                  bottom: 10,
+                  child: Text(
+                    '${this.movie.genre}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
-
-  Image getPosterImage() {
-    try {
-      return Image.network(
-        this.movie.imageURL,
-        fit: BoxFit.fill,
-        errorBuilder: (context, dynamic, error) =>
-            Image.asset(
-              'assets/images/error-image.png',
-              fit: BoxFit.fill,
-            ),
-      );
-    } catch (e) {
-      return Image.asset(
-        'assets/images/error-image.png',
-        fit: BoxFit.fill,
-      );
-    }
   }
 }

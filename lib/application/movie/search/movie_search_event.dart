@@ -1,22 +1,18 @@
 part of 'movie_search_bloc.dart';
 
 @immutable
-abstract class MovieSearchEvent extends Equatable {}
-
-class MovieSearchGetInputEvent implements MovieSearchEvent{
-  List<Object> get props => [];
-
+abstract class MovieSearchEvent extends Equatable {
   @override
-  bool get stringify => true;
+  List<Object> get props => [];
 }
 
-class MovieSearchTerminatingEvent implements MovieSearchEvent{
+class MovieSearchGetInputEvent extends MovieSearchEvent{}
+
+class MovieSearchTerminatingEvent extends MovieSearchEvent{
   final String searchString;
 
   MovieSearchTerminatingEvent({this.searchString = ""});
 
-  List<Object> get props => [searchString];
-
   @override
-  bool get stringify => true;
+  List<Object> get props => [searchString];
 }

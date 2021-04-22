@@ -12,27 +12,30 @@ void main() {
   test(
     'Should return correct List<Movie> when called',
     () async {
-      final searchString = "batman";
-
-      final result = await movieRepo.getMovieListOnline(searchString);
-
-      expect(result.length, 9);
-    }
-  );
-
-  test(
-    'Should return correct List<Movie> when called',
-    () async {
-      final MovieEntity movie = MovieEntity(id: ImdbID(), title:'test', imageURL:'test');
+      final MovieEntity movie = MovieEntity(
+        id: ImdbID(),
+        title:'Test title',
+        imageURL:'Test URL',
+        genre: 'Test genre',
+        actor: 'Test actor',
+        rank: 1,
+        year: 2020
+      );
       List<MovieEntity> movieList = [];
       final List<MovieEntity> matcher = [movie];
       final Response response = Response(
         jsonEncode({
-          'Search':[
+          'd':[
             {
-              'imbdID':'zz0000000',
-              'Title':'test',
-              'Poster':'test',
+              'i':{
+                'imageUrl':'Test URL'
+              },
+              'id':'zz0000000',
+              'l':'Test title',
+              'q':'Test genre',
+              'rank':1,
+              's':'Test actor',
+              'y':2020
             }
           ]
         }),

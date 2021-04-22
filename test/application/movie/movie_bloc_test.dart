@@ -19,7 +19,15 @@ void main(){
   setUp(() {
     _networkInfo= MockNetworkInfoImpl();
     _movieRepo = MockMovieRepoImpl();
-    _movie = MovieEntity(id: ImdbID(), title: "Test", imageURL: "Test");
+    _movie = MovieEntity(
+        id: ImdbID(id: 'tt0944947'),
+        title:'Test title',
+        imageURL:'https://m.media-amazon.com/images/M/MV5BYTRiNDQwYzAtMzVlZS00NTI5LWJjYjUtMzkwNTUzMWMxZTllXkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_.jpg',
+        genre: 'TV series',
+        actor: 'Test actor',
+        rank: 13,
+        year: 2020
+    );
   });
 
   blocTest(

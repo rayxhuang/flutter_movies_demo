@@ -25,12 +25,24 @@ class MovieRepoImpl implements IMovieRepo{
   void addToMovieListFromResponse(List<MovieEntity> movies, http.Response response) {
     try {
       if (response.statusCode == 200) {
-        var responseBodyMap = json.decode(response.body)['Search'];
+        var responseBodyMap = json.decode(response.body)['d'];
         for (var map in responseBodyMap) {
-          final ImdbID id = ImdbID(id: map['imdbID']);
-          final String title = map['Title'];
-          final String imageUrl = map['Poster'];
-          final MovieEntity movie = MovieEntity(id: id, title: title, imageURL: imageUrl);
+          final ImdbID id = ImdbID(id: map['id']);
+          final String title = map['l'];
+          final String imageUrl = map['i']['imageUrl'];
+          final String genre = map['q'];
+          final int rank = map['rank'];
+          final String actor = map['s'];
+          final int year = map['y'];
+          final MovieEntity movie = MovieEntity(
+            id: id,
+            title: title,
+            imageURL: imageUrl,
+            genre: genre,
+            rank: rank,
+            actor: actor,
+            year: year
+          );
           movies.add(movie);
         }
       }
