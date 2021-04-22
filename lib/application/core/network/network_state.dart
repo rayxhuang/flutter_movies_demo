@@ -8,6 +8,8 @@ abstract class NetworkState extends Equatable {
 
 class NetworkInitialState extends NetworkState {}
 
+class NetworkConnectedInitialState extends NetworkState {}
+
 class NetworkConnectedState extends NetworkState {}
 
 class NetworkDisconnectedState extends NetworkState {}

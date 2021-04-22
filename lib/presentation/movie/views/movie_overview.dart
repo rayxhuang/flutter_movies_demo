@@ -14,7 +14,12 @@ class MoviePage extends HookWidget{
   Widget build(BuildContext context) {
     final AnimationController _movieAnimationController = useAnimationController(duration: const Duration(milliseconds: 1500));
     return BlocListener<NetworkBloc, NetworkState>(
-      listenWhen: (previous, current) => previous != current,
+      listenWhen: (previous, current) {
+        if (previous is NetworkConnectedInitialState && current is NetworkConnectedState) {
+          return false;
+        }
+        return previous != current;
+      },
       listener: (BuildContext context, state) {
         var messenger = ScaffoldMessenger.of(context);
         if (state is NetworkLostConnectionState) {
@@ -28,9 +33,9 @@ class MoviePage extends HookWidget{
       child: BlocBuilder<MovieBloc, MovieState>(
         builder: (BuildContext context, state) {
           if (state is MovieLoadedSuccessfulState) {
-            if (!_movieAnimationController.isAnimating) {
+            // if (!_movieAnimationController.isAnimating) {
               _movieAnimationController.forward(from: 0);
-            }
+            // }
             return Container(
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -52,7 +57,10 @@ class MoviePage extends HookWidget{
           } else if (state is MovieLoadingState) {
             return BlankPageMessageWidget(message: 'Connected to internet, loading...',);
           } else if (state is MovieErrorState) {
-            return BlankPageMessageWidget(message: 'Error. Could not retrieve data from Internet',);
+            return BlankPageMessageWidget(
+              message: 'Error. Could not retrieve data from Internet',
+              subMessage: 'Please refresh',
+            );
           } else {
             return BlankPageMessageWidget(message: 'Loading...',);
           }

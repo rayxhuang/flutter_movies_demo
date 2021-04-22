@@ -27,7 +27,7 @@ class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
       checkConnectionRecursively();
     } else if (event is NetworkGetConnectivityEvent) {
       if (connected) {
-        yield NetworkConnectedState();
+        yield NetworkConnectedInitialState();
         checkConnectionRecursively();
       } else{
         yield NetworkDisconnectedState();

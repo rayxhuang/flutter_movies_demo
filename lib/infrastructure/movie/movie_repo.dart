@@ -1,24 +1,26 @@
 import 'package:flutter_app_demo/domain/movie/i_movie_repo.dart';
 import 'package:flutter_app_demo/domain/movie/imdb_id.dart';
 import 'package:flutter_app_demo/domain/movie/movie.dart';
-import 'package:flutter_app_demo/infrastructure/core/converter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class MovieRepoImpl implements IMovieRepo{
+  final Map<String, String> requestHeaders = const {
+    'x-rapidapi-key': '91e1259ecamshcf3f7c623b5e1e0p18e596jsn60f68229d621',
+    'x-rapidapi-host': 'imdb8.p.rapidapi.com',
+  };
+
   @override
   Future<List<MovieEntity>> getMovieListOnline(String searchString) async {
     List<MovieEntity> _movies = [];
-    searchString = searchStringConverter(searchString);
     try {
-      var url = Uri.parse('https://fake-movie-database-api.herokuapp.com/api?s=$searchString');
-      var response = await http.get(url);
+      var url = Uri.parse('https://imdb8.p.rapidapi.com/auto-complete?q=$searchString');
+      var response = await http.get(url, headers: requestHeaders);
 
       addToMovieListFromResponse(_movies, response);
     } catch (e) {
-      print("Unexpected Error occurred in Get request to https://fake-movie-database-api.herokuapp.com/api?s=$searchString");
+      print("Unexpected Error occurred in Get request to https://imdb8.p.rapidapi.com/auto-complete?q=$searchString");
     }
-    //print(_movies.length);
     return _movies;
   }
 
