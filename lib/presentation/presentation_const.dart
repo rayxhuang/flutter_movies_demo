@@ -24,6 +24,7 @@ const Icon kMovieIconOrange = Icon(
 const SizedBox kSizedBoxVertical5 = SizedBox(height: 5,);
 
 const TextStyle kMovieDetailSubtitleStyle = TextStyle(
+  color: Colors.black,
   fontSize: 20,
   fontWeight: FontWeight.bold,
 );

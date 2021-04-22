@@ -15,6 +15,7 @@ class MyMovieApp extends StatelessWidget {
     final NetworkInfoImpl _networkInfo = NetworkInfoImpl(connectionChecker: _dataConnectionChecker);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -37,4 +38,3 @@ class MyMovieApp extends StatelessWidget {
     );
   }
 }
-//BlocProvider.of<MovieBloc>(context).add(MovieGetMoviesEvent());

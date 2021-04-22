@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_demo/application/movie/movie_bloc.dart';
 import 'package:flutter_app_demo/application/core/network/network_bloc.dart';
 import 'package:flutter_app_demo/presentation/components/blank_page_with_message.dart';
-import 'package:flutter_app_demo/presentation/movie/movie_detail_page.dart';
+import 'package:flutter_app_demo/presentation/movie/views/movie_detail_view.dart';
 import 'package:flutter_app_demo/presentation/presentation_const.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'movie_display_widget.dart';
+import '../widgets/movie_display_widget.dart';
 
 class MoviePage extends StatefulWidget{
   @override

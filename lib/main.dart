@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_demo/presentation/my_movie_app.dart';
+import 'package:flutter_app_demo/presentation/movie_app.dart';
 import 'package:http/http.dart' as http;
 
 void main() async {

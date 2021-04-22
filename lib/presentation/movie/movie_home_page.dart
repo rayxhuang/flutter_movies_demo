@@ -4,15 +4,15 @@ import 'package:flutter_app_demo/application/movie/movie_bloc.dart';
 import 'package:flutter_app_demo/application/movie/search/movie_search_bloc.dart';
 import 'package:flutter_app_demo/presentation/components/blank_page_with_message.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../presentation_const.dart';
-import 'movie_view_page.dart';
+import 'views/movie_overview.dart';
 
-class MovieHomePage extends StatelessWidget {
-  final TextEditingController _inputController = TextEditingController(text: 'Batman');
-
+class MovieHomePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final _inputController = useTextEditingController(text: 'Batman');
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.indigo[600],

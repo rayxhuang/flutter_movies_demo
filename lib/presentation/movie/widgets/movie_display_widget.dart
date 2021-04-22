@@ -11,7 +11,11 @@ class MovieDisplayWidget extends StatelessWidget {
   final AnimationController animationController;
   final int offsetMultiplier;
 
-  MovieDisplayWidget({@required this.movie, @required this.animationController, @required this.offsetMultiplier});
+  MovieDisplayWidget({
+    @required this.movie,
+    @required this.animationController,
+    @required this.offsetMultiplier,
+  });
 
   @override
   Widget build(BuildContext context) {
