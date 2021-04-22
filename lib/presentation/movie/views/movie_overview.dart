@@ -5,34 +5,14 @@ import 'package:flutter_app_demo/presentation/components/blank_page_with_message
 import 'package:flutter_app_demo/presentation/movie/views/movie_detail_view.dart';
 import 'package:flutter_app_demo/presentation/presentation_const.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../widgets/movie_display_widget.dart';
 
-class MoviePage extends StatefulWidget{
-  @override
-  _MoviePageState createState() => _MoviePageState();
-}
-
-class _MoviePageState extends State<MoviePage> with SingleTickerProviderStateMixin{
-  AnimationController _movieAnimationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _movieAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    );
-  }
-
-  @override
-  void dispose() {
-    _movieAnimationController.dispose();
-    super.dispose();
-  }
-
+class MoviePage extends HookWidget{
   @override
   Widget build(BuildContext context) {
+    final AnimationController _movieAnimationController = useAnimationController(duration: const Duration(milliseconds: 1500));
     return BlocListener<NetworkBloc, NetworkState>(
       listenWhen: (previous, current) => previous != current,
       listener: (BuildContext context, state) {
